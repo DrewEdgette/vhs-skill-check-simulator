@@ -173,15 +173,24 @@ class SkillCheckLine {
 
   oscillate() {
     this.counter += 0.086;
-    // this.counter += 0.01;
     var cos_value = cos(this.counter);
     var skill_check_pos = map(cos_value, -1, 1, 0, this.sz);
 
     this.midPoint.x = skill_check_pos;
   }
 
-  setColor(color) {
-    this.color = color;
+  setColor(result) {
+    if (result == "miss") {
+      this.color = color(255, 0, 0);
+    }
+
+   else if (result == "good") {
+      this.color = color(255);
+    }
+
+    else if (result == "great") {
+      this.color = color(0, 255, 0);
+    }
   }
 }
 
@@ -197,6 +206,8 @@ class SkillCheckTarget {
     this.width_great = this.width_good / 2.222;
 
     this.height = sz * 0.04;
+
+    this.skill_check_result = "miss";
 
 
     this.COLOR_GOOD = color(72,96,102);
@@ -229,16 +240,19 @@ class SkillCheckTarget {
     // missed skill check
     if ((skill_check_point < lower_bound_good) || (skill_check_point > upper_bound_good)) {
       audio_skill_check_miss.play();
+      this.skill_check_result = "miss";
     }
 
     // good skill check
     else if ((lower_bound_good <= skill_check_point && skill_check_point < lower_bound_great) || (upper_bound_great < skill_check_point && skill_check_point <= upper_bound_good)) {
       audio_skill_check_good.play();
+      this.skill_check_result = "good";
     }
 
     // great skill check
     else if (lower_bound_great <= skill_check_point && skill_check_point <= upper_bound_great) {
       audio_skill_check_great.play();
+      this.skill_check_result = "great";
     }
   }
 }
@@ -253,7 +267,11 @@ let target = new SkillCheckTarget(THE_SIZE);
 let skill_check_in_progress = false;
 let skill_check_ending = false;
 
+let result_text = "SKILLCHECK";
+let result_text_color = color(255);
+
 var currentFrame = frameCount;
+
 
 
 function preload() {
@@ -281,6 +299,22 @@ function keyPressed() {
     currentFrame = frameCount;
     skill_check_ending = true;
     target.playSound(skill_check_line.midPoint.x);
+    skill_check_line.setColor(target.skill_check_result);
+    
+    if (target.skill_check_result == "miss") {
+      result_text = "MISS!"
+      result_text_color = color(255, 0, 0);
+    }
+
+    else if (target.skill_check_result == "good") {
+      result_text = "GOOD!"
+      result_text_color = color(255);
+    }
+
+    else if (target.skill_check_result == "great") {
+      result_text = "GREAT!"
+      result_text_color = color(0, 255, 0);
+    }
   } 
 }
 
@@ -304,14 +338,22 @@ function draw() {
       skill_check_ending = false;
     }
 
-    fill(255);
-    text("SKILLCHECK", THE_SIZE/2, -windowHeight/4);
+    fill(result_text_color);
+    text(result_text, THE_SIZE/2, -windowHeight/4);
     image(img, THE_SIZE / 2, -windowHeight/8, THE_SIZE * 0.1, THE_SIZE * 0.1);
+  
+    fill(255);
+    text("[Space] Hit Target Zone", THE_SIZE/2, windowHeight/4);
     noFill();
   }
 
   else {
     loop();
+    skill_check_line.setColor("good");
+    result_text = "SKILLCHECK";
+    result_text_color = color(255);
+
+
     if (keyIsDown(69)) {
       current_progress.increaseProgress();
 
@@ -325,7 +367,7 @@ function draw() {
 
     else {
       fill(255);
-      text("Hold E To Craft Weapon", THE_SIZE/2, windowHeight/4);
+      text("Hold [E] To Craft Weapon", THE_SIZE/2, windowHeight/4);
       noFill();
     }
 
