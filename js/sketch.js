@@ -43,6 +43,7 @@ function preload() {
   audio_skill_check_good = loadSound('sounds/skillcheckgood.mp3');
   audio_skill_check_miss = loadSound('sounds/skillcheckmiss.mp3');
   audio_skill_check_begin = loadSound('sounds/skillcheckbegin.mp3');
+  audio_crafting = loadSound('sounds/crafting.mp3');
 }
 
 
@@ -82,13 +83,25 @@ function keyPressed() {
       result_text_color = color(0, 255, 0);
       image_result_hammer = image_hammer_great;
     }
-  } 
+  }
+
+
+  if (document.querySelector('#checkbox_crafting').checked && !audio_crafting.isPlaying() && keyCode == 69) {
+    audio_crafting.loop();
+    audio_crafting.jump(random(0, audio_crafting.duration()))
+  }
+}
+
+function keyReleased(){
+  if (keyCode === 69){
+    audio_crafting.stop();
+  }
+
 }
 
 
 
 function windowResized() {
-  print("RESIZED THE WINDOW")
   resizeCanvas(windowWidth, windowHeight);
   progress_bar.updatePosition(currentWindowWidth, windowWidth);
   current_progress.updatePosition(currentWindowWidth, windowWidth);
