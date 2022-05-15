@@ -15,7 +15,9 @@ class SkillCheckLine {
     }
   
     oscillate() {
-      this.counter += 0.086;
+      // this.counter += 0.086;
+      this.counter += 0.058;
+      // this.counter += 0.001;
       var cos_value = cos(this.counter);
       var skill_check_pos = map(cos_value, -1, 1, 0, this.sz);
   
@@ -34,5 +36,15 @@ class SkillCheckLine {
       else if (result == "great") {
         this.color = color(0, 255, 0);
       }
+    }
+
+    updatePosition(oldWidth, newWidth) {
+      this.sz = newWidth;
+      this.midPoint.updatePosition(oldWidth, newWidth);
+      this.midPoint.y = (newWidth * 0.04) / 2;
+    }
+
+    setRandomPosition() {
+      this.counter = random(0,TWO_PI);
     }
   }

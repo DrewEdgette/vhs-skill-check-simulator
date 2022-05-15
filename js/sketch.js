@@ -1,20 +1,22 @@
 new p5();
 
+let currentWindowWidth = windowWidth;
+let currentWindowHeight = windowHeight;
 
+let bar_height = windowWidth * 0.04;
+let trap_offset_x = windowWidth * 0.02;
 
-let THE_SIZE = windowWidth;
+let point1 = new Point(trap_offset_x, 0);
+let point2 = new Point(0, bar_height);
+let point3 = new Point(windowWidth, bar_height);
+let point4 = new Point(windowWidth - trap_offset_x, 0);
+let point5 = new Point(windowWidth - trap_offset_x, 0);
 
-let point1 = new Point(THE_SIZE * 0.02, 0);
-let point2 = new Point(0, THE_SIZE * 0.04);
-let point3 = new Point(THE_SIZE, THE_SIZE * 0.04);
-let point4 = new Point(THE_SIZE - (THE_SIZE * 0.02), 0);
-let point5 = new Point(THE_SIZE - (THE_SIZE * 0.02), 0);
+let progress_bar = new ProgressBar(windowWidth, point1, point2, point3, point4);
+let current_progress = new Progress(windowWidth, point1, point2, point3, point4, point5);
 
-let progress_bar = new ProgressBar(THE_SIZE, point1, point2, point3, point4);
-let current_progress = new Progress(THE_SIZE, point1, point2, point3, point4, point5);
-
-let skill_check_line = new SkillCheckLine(THE_SIZE);
-let target = new SkillCheckTarget(THE_SIZE);
+let skill_check_line = new SkillCheckLine(windowWidth);
+let target = new SkillCheckTarget(windowWidth);
 
 let skill_check_in_progress = false;
 let skill_check_ending = false;
@@ -46,10 +48,9 @@ function preload() {
 
 
 function setup() {
-  createCanvas(THE_SIZE, windowHeight);
+  createCanvas(windowWidth, windowHeight);
   frameRate(60);
   textFont(the_font);
-  textSize(THE_SIZE * 0.03776);
   textAlign(CENTER);
   rectMode(CENTER);
   imageMode(CENTER);
@@ -86,8 +87,21 @@ function keyPressed() {
 
 
 
+function windowResized() {
+  print("RESIZED THE WINDOW")
+  resizeCanvas(windowWidth, windowHeight);
+  progress_bar.updatePosition(currentWindowWidth, windowWidth);
+  current_progress.updatePosition(currentWindowWidth, windowWidth);
+  skill_check_line.updatePosition(currentWindowWidth, windowWidth);
+  target.updatePosition(currentWindowWidth, windowWidth);
+
+  currentWindowWidth = windowWidth;
+  currentWindowHeight = windowHeight;
+}
+
+
 function draw() {
-  resizeCanvas(THE_SIZE, windowHeight);
+  textSize(windowWidth * 0.03776);
   background(0);
   translate(0, windowHeight/2);
   progress_bar.show();
@@ -98,11 +112,11 @@ function draw() {
 
     if (!skill_check_ending) {
       skill_check_line.oscillate();
-      image(image_hammer, THE_SIZE / 2, -windowHeight/8, THE_SIZE * 0.1, THE_SIZE * 0.1);
+      image(image_hammer, windowWidth / 2, -windowHeight/8, windowWidth * 0.1, windowWidth * 0.1);
     }
 
     else {
-      image(image_result_hammer, THE_SIZE / 2, -windowHeight/8, THE_SIZE * 0.1, THE_SIZE * 0.1);
+      image(image_result_hammer, windowWidth / 2, -windowHeight/8, windowWidth * 0.1, windowWidth * 0.1);
     }
 
     if (frameCount - currentFrame == 45) {
@@ -111,14 +125,15 @@ function draw() {
     }
 
     fill(result_text_color);
-    text(result_text, THE_SIZE/2, -windowHeight/4);
+    text(result_text, windowWidth/2, -windowHeight/4);
   
     fill(255);
-    text("[Space] Hit Target Zone", THE_SIZE/2, windowHeight/4);
+    text("[Space] Hit Target Zone", windowWidth/2, windowHeight/4);
     noFill();
   }
 
-  else {
+  else if (!skill_check_in_progress) {
+    skill_check_line.setRandomPosition();
     skill_check_line.setColor("good");
     result_text = "SKILLCHECK";
     result_text_color = color(255);
@@ -137,7 +152,7 @@ function draw() {
 
     else {
       fill(255);
-      text("Hold [E] To Craft Weapon", THE_SIZE/2, windowHeight/4);
+      text("Hold [E] To Craft Weapon", windowWidth/2, windowHeight/4);
       noFill();
     }
 

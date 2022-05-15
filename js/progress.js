@@ -1,17 +1,20 @@
 class Progress extends ProgressBar {
     constructor(sz, p1, p2, p3, p4, p5) {
       super(sz, p1, p2, p3, p4);
+
+      this.trap_offset_x = this.sz * 0.02;
+      this.bar_height = this.sz * 0.04;
   
-      this.p1 = new Point(this.trap_offset_x, 0);
-      this.p2 = new Point(0, this.bar_height);
-      this.p3 = new Point(this.sz, this.bar_height);
-      this.p4 = new Point(this.sz - this.trap_offset_x, 0)
-      this.p5 = new Point(this.sz - this.trap_offset_x, 0)
+      this.p1 = new Point(p1.x, p1.y);
+      this.p2 = new Point(p2.x, p2.y);
+      this.p3 = new Point(p3.x, p3.y);
+      this.p4 = new Point(p4.x, p4.y)
+      this.p5 = new Point(p4.x, p4.y)
   
-      this.p1Bar = p1;
-      this.p2Bar = p2;
-      this.p3Bar = p3;
-      this.p4Bar = p4;
+      this.p1Bar = new Point(p1.x, p1.y);
+      this.p2Bar = new Point(p2.x, p2.y);
+      this.p3Bar = new Point(p3.x, p3.y);
+      this.p4Bar = new Point(p4.x, p4.y)
   
       this.COLOR_BAR_FILLED = color(253,75,254);
   
@@ -70,8 +73,7 @@ class Progress extends ProgressBar {
   
   
     // gets the point of intersection at the trapezoid bits
-    getDeterminant(A, B, C, D)
-      {
+    getDeterminant(A, B, C, D) {
           // Line AB represented as a1x + b1y = c1
           var a1 = B.getY() - A.getY();
           var b1 = A.getX() - B.getX();
@@ -88,5 +90,24 @@ class Progress extends ProgressBar {
           var y = (a1*c2 - a2*c1)/determinant;
   
           return y;
+    }
+
+    updatePosition(oldWidth, newWidth) {
+      this.sz = newWidth;
+
+      this.trap_offset_x = this.sz * 0.02;
+      this.bar_height = this.sz * 0.04;
+
+      let points = [this.p1, this.p2, this.p3, this.p4, this.p5, this.p1Bar, this.p2Bar, this.p3Bar, this.p4Bar];
+
+      for (let i in points) {
+        points[i].updatePosition(oldWidth, newWidth);
       }
+
+      this.p2.y = newWidth * 0.04;
+      this.p3.y = newWidth * 0.04;
+
+      this.p2Bar.y = newWidth * 0.04;
+      this.p2Bar.y = newWidth * 0.04;
+    }
   }

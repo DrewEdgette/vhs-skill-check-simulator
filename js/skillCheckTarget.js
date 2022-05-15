@@ -1,13 +1,15 @@
 class SkillCheckTarget {
     constructor(sz) {
-      this.trap_offset_x = sz * 0.02;
+      this.sz = sz;
+
+      this.trap_offset_x = this.sz * 0.02;
   
-      this.midPoint = new Point(random(this.trap_offset_x*8,sz-this.trap_offset_x*8), (sz * 0.04) / 2);
+      this.midPoint = new Point(random(this.trap_offset_x*8,this.sz-this.trap_offset_x*8), (this.sz * 0.04) / 2);
   
-      this.width_good = sz * 0.18;
+      this.width_good = this.sz * 0.18;
       this.width_great = this.width_good / 2.222;
   
-      this.height = sz * 0.04;
+      this.height = this.sz * 0.04;
   
       this.skill_check_result = "miss";
   
@@ -56,5 +58,15 @@ class SkillCheckTarget {
         audio_skill_check_great.play();
         this.skill_check_result = "great";
       }
+    }
+
+    updatePosition(oldWidth, newWidth) {
+      this.sz = newWidth;
+      this.midPoint.updatePosition(oldWidth, newWidth);
+      this.midPoint.y = (newWidth * 0.04) / 2
+      this.trap_offset_x = newWidth * 0.02;
+      this.width_good = newWidth * 0.18;
+      this.width_great = this.width_good / 2.222;
+      this.height = newWidth * 0.04;
     }
   }

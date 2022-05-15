@@ -23,4 +23,10 @@ class Point {
     increment(value) {
       this.x += value;
     }
+
+    updatePosition(oldWidth, newWidth) {
+      let newXPos = map(this.x, 0, oldWidth, 0, newWidth);
+      this.x = newXPos;
+    }
+
   }  

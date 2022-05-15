@@ -12,12 +12,26 @@ class ProgressBar {
   
       this.COLOR_BAR_UNFILLED = color(35,8,29);
       this.COLOR_STROKE = color(79,50,92);
-      }
+    }
   
-      show() {
-        stroke(this.COLOR_STROKE);
-        fill(this.COLOR_BAR_UNFILLED);
-        quad(this.p1.x, this.p1.y, this.p2.x, this.p2.y, this.p3.x, this.p3.y, this.p4.x, this.p4.y);
-        noStroke();
+    show() {
+      stroke(this.COLOR_STROKE);
+      fill(this.COLOR_BAR_UNFILLED);
+      quad(this.p1.x, this.p1.y, this.p2.x, this.p2.y, this.p3.x, this.p3.y, this.p4.x, this.p4.y);
+      print(this.p3.x);
+      noStroke();
+    }
+
+    updatePosition(oldWidth, newWidth) {
+      this.sz = newWidth;
+
+      let points = [this.p1, this.p2, this.p3, this.p4];
+
+      for (let i in points) {
+        points[i].updatePosition(oldWidth, newWidth);
       }
+
+      this.p2.y = newWidth * 0.04;
+      this.p3.y = newWidth * 0.04;
+    }
   }
