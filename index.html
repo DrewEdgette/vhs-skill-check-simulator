@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VHS Skill Check Simulator</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+
+  <section class="top-nav">
+    <input id="menu-toggle" type="checkbox" />
+    <label class='menu-button-container' for="menu-toggle">
+    <div class='menu-button'></div>
+  </label>
+    <ul class="menu">
+      <li>Skill Check Start Sound<input type="checkbox" id="checkbox_skill_check_start" value="checkbox_skill_check_start" checked></li>
+      <li>Skill Check Result Sound<input type="checkbox" id="checkbox_skill_check_result" value="checkbox_skill_check_result" checked></li>
+      <li>Crafting Sound<input type="checkbox" id="checkbox_crafting" value="checkbox_crafting"></li>
+      <li>Tension Loop<input type="checkbox" id="checkbox_tension" value="checkbox_tension"></li>
+      <li>Pings<input type="checkbox" id="checkbox_pings" value="checkbox_pings"></li>
+      <li><a href="https://github.com/DrewEdgette/vhs-skill-check-simulator">github</a></li>
+    </ul>
+  </section>
+
+  <body>
+      <script src="js/point.js"></script>
+      <script src="js/progressBar.js"></script>
+      <script src="js/progress.js"></script>
+      <script src="js/skillCheckLine.js"></script>
+      <script src="js/skillCheckTarget.js"></script>
+      <script src="js/sketch.js"></script>
+  </body>
+</html>
