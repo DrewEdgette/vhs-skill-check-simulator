@@ -28,6 +28,8 @@ let image_result_hammer;
 
 var currentFrame = frameCount;
 
+var rdm = 0;
+
 
 
 function preload() {
@@ -44,6 +46,9 @@ function preload() {
   audio_skill_check_miss = loadSound('sounds/skillcheckmiss.mp3');
   audio_skill_check_begin = loadSound('sounds/skillcheckbegin.mp3');
   audio_crafting = loadSound('sounds/crafting.mp3');
+  audio_ping_blank = loadSound('sounds/pingblank.mp3');
+  audio_ping_danger = loadSound('sounds/pingdanger.mp3');
+  audio_tension = loadSound('sounds/tensionloop.mp3');
 }
 
 
@@ -158,7 +163,7 @@ function draw() {
     if (keyIsDown(69)) {
       current_progress.increaseProgress();
 
-      var rdm = int(random(1,200));
+      rdm = int(random(1,200));
 
       if (rdm == 1) {
         skill_check_in_progress = true;
@@ -177,5 +182,21 @@ function draw() {
     }
 
     current_progress.show();
+  }
+
+  rdm = int(random(1,500));
+  if (rdm == 1 && document.querySelector('#checkbox_pings').checked) {
+    audio_ping_blank.play();
+  }
+
+  rdm = int(random(1,500));
+  if (rdm == 1 && document.querySelector('#checkbox_pings').checked) {
+    audio_ping_danger.play();
+  }
+
+  rdm = int(random(1,500));
+  if (rdm == 1 && document.querySelector('#checkbox_tension').checked && !audio_tension.isPlaying()) {
+    audio_tension.play();
+    audio_tension.setVolume(0.5);
   }
 }
