@@ -135,14 +135,14 @@ html, body {
     color: white;
     background-color: #222;
     overflow: hidden;
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .menu > li > div {
     display: flex;
     justify-content: space-between;
     width: 40%;
-    min-width: 400px;
+    min-width: 360px;
   }
 
   
