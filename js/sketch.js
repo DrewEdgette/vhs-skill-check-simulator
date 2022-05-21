@@ -8,7 +8,7 @@ window.addEventListener('click', function(e){
 
 var is_mobile = false;
 
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && screenWidth <= 810) {
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && windowWidth <= 810) {
   is_mobile = true;
 }
 
