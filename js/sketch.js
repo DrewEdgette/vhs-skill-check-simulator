@@ -10,6 +10,8 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   document.getElementById("checkbox_auto_progress").checked = true;
 }
 
+
+
 new p5();
 
 let currentWindowWidth = windowWidth;
