@@ -6,7 +6,8 @@ window.addEventListener('click', function(e){
   }
 });
 
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && screen.width <= 810) {
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && document.documentElement.clientWidth <= 810) {
   document.getElementById("checkbox_auto_progress").checked = true;
 }
 
@@ -204,7 +205,7 @@ function draw() {
     result_text_color = color(255);
 
 
-    if (keyIsDown(69) || document.querySelector('#checkbox_auto_progress').checked) {
+    if (keyIsDown(69) || (document.querySelector('#checkbox_auto_progress').checked) && frameCount >= 30) {
       current_progress.increaseProgress();
       
       rdm = int(random(1,200));

@@ -103,8 +103,5 @@ class Progress extends ProgressBar {
 
       this.p2.y = newWidth * 0.04;
       this.p3.y = newWidth * 0.04;
-
-      // this.p2Bar.y = newWidth * 0.04;
-      // this.p2Bar.y = newWidth * 0.04;
     }
   }
