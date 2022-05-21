@@ -6,6 +6,12 @@ window.addEventListener('click', function(e){
   }
 });
 
+var is_mobile = false;
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && screenWidth <= 810) {
+  is_mobile = true;
+}
+
 new p5();
 
 let currentWindowWidth = windowWidth;
@@ -68,6 +74,8 @@ function setup() {
   textAlign(CENTER);
   rectMode(CENTER);
   imageMode(CENTER);
+
+  print(windowWidth);
 
   audio_crafting.setVolume(0);
   audio_crafting.loop();
@@ -168,7 +176,7 @@ function draw() {
     result_text_color = color(255);
 
 
-    if (keyIsDown(69)) {
+    if (keyIsDown(69) || is_mobile) {
       current_progress.increaseProgress();
 
       rdm = int(random(1,200));
