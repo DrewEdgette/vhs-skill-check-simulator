@@ -1,5 +1,5 @@
 class Progress extends ProgressBar {
-    constructor(sz, p1, p2, p3, p4, p5) {
+    constructor(sz, p1, p2, p3, p4, p5, progressBar) {
       super(sz, p1, p2, p3, p4);
 
       this.trap_offset_x = this.sz * 0.02;
@@ -11,10 +11,7 @@ class Progress extends ProgressBar {
       this.p4 = new Point(p4.x, p4.y)
       this.p5 = new Point(p4.x, p4.y)
   
-      this.p1Bar = new Point(p1.x, p1.y);
-      this.p2Bar = new Point(p2.x, p2.y);
-      this.p3Bar = new Point(p3.x, p3.y);
-      this.p4Bar = new Point(p4.x, p4.y)
+      this.progressBar = progressBar;
   
       this.COLOR_BAR_FILLED = color(253,75,254);
   
@@ -55,13 +52,13 @@ class Progress extends ProgressBar {
       // current progress is left of the first trapezoid bit
       if (this.p3.getX() < this.trap_offset_x) {
         this.p1.setX(this.p3.getX());
-        this.p1.setY(this.getDeterminant(this.p2Bar, this.p1Bar, this.p4, this.p3));
-        this.p4.setY(this.getDeterminant(this.p2Bar, this.p1Bar, this.p4, this.p3));
+        this.p1.setY(this.getDeterminant(this.progressBar.p2, this.progressBar.p1, this.p4, this.p3));
+        this.p4.setY(this.getDeterminant(this.progressBar.p2, this.progressBar.p1, this.p4, this.p3));
       }
   
       // current progress is right of the second trapezoid bit
       if (this.p3.getX() > this.sz - this.trap_offset_x) {
-        this.p4.setY(this.getDeterminant(this.p3Bar, this.p4Bar, this.p4, this.p3));
+        this.p4.setY(this.getDeterminant(this.progressBar.p3, this.progressBar.p4, this.p4, this.p3));
       }
       
       else {
@@ -98,7 +95,7 @@ class Progress extends ProgressBar {
       this.trap_offset_x = this.sz * 0.02;
       this.bar_height = this.sz * 0.04;
 
-      let points = [this.p1, this.p2, this.p3, this.p4, this.p5, this.p1Bar, this.p2Bar, this.p3Bar, this.p4Bar];
+      let points = [this.p1, this.p2, this.p3, this.p4, this.p5];
 
       for (let i in points) {
         points[i].updatePosition(oldWidth, newWidth);
@@ -107,7 +104,7 @@ class Progress extends ProgressBar {
       this.p2.y = newWidth * 0.04;
       this.p3.y = newWidth * 0.04;
 
-      this.p2Bar.y = newWidth * 0.04;
-      this.p2Bar.y = newWidth * 0.04;
+      // this.p2Bar.y = newWidth * 0.04;
+      // this.p2Bar.y = newWidth * 0.04;
     }
   }

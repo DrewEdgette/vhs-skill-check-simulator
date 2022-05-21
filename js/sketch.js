@@ -1,3 +1,11 @@
+window.addEventListener('click', function(e){   
+  if (document.getElementById('top-nav').contains(e.target)){
+    // Clicked in box
+  } else{
+    document.getElementById("menu-toggle").checked = false;
+  }
+});
+
 new p5();
 
 let currentWindowWidth = windowWidth;
@@ -13,7 +21,7 @@ let point4 = new Point(windowWidth - trap_offset_x, 0);
 let point5 = new Point(windowWidth - trap_offset_x, 0);
 
 let progress_bar = new ProgressBar(windowWidth, point1, point2, point3, point4);
-let current_progress = new Progress(windowWidth, point1, point2, point3, point4, point5);
+let current_progress = new Progress(windowWidth, point1, point2, point3, point4, point5, progress_bar);
 
 let skill_check_line = new SkillCheckLine(windowWidth);
 let target = new SkillCheckTarget(windowWidth);
